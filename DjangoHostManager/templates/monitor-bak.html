@@ -1,0 +1,127 @@
+
+{% extends 'base.html' %}
+
+{% block title %}远程主机监控{% endblock %}
+
+{% block content %}
+    <div class="container">
+	<div class="title"><h1>远程主机监控</h1></div>
+	<div class="main">
+
+		<div class="box">
+            <!--<form name="form1" method="post" action="/master/user/repass" onsubmit="javascript:return $.form.post(this);">-->
+            <form id="formaction" method="POST" enctype="multipart/form-data">
+                {% csrf_token %}
+            <table width="100%" border="0" cellspacing="0" cellpadding="0" class="edit-box">
+                <tbody>
+                <tr>
+                    <td width="120" valign="top" style="line-height:36px">主机选择：</td>
+                    <td width="155">
+                        <select id="status" name="hostip" class="form-input">
+                            <option value="">主机名</option>
+                            {% for hostip in hostinfo  %}
+                            <option value="{{ hostip.public_ip }}" root="{{ hostip.admin_root }}" pass="{{ hostip.admin_pass }}">{{ hostip.hostname }}</option>
+                            {% endfor %}
+                        </select>
+                    </td>
+                    <td width="83">
+                        <select id="status" name="hostip" class="form-input">
+                            <option value="">上线状态</option>
+                            {% for choice in status_obj  %}
+                            <option value="{{ choice.1 }}">{{ choice.1 }}</option>
+                            {% endfor %}
+                        </select>
+                    </td>
+                    <td width="65">
+                        <select id="status" name="hostip" class="form-input">
+                            <option value="">主机组</option>
+                            {% for hg in hostgroup  %}
+                            <option value="{{ hg.name }}" gid="{{ hg.id }}">{{ hg.name }}</option>
+                            {% endfor %}
+                        </select>
+                    </td>
+
+                    <td><input type="button" id="execute" class="btn btn-blue btn-float r15" value="开始监控"/></td>
+                </tr>
+                </tbody>
+            </table>
+
+            </form>
+        </div>
+        <div class="box" style="background:#fff;">
+            <!-- cpu使用率 -->
+            <div id="cpu_use" style="width: 32%;height:350px;border:1px solid #dddddd;float: left;margin-right: 8px;background:#fff;"></div>
+            <div id="mem_use" style="width: 32%;height:350px;border:1px solid #dddddd;float: left;margin-right: 8px;background:#fff;"></div>
+            <div id="disk_use" style="width: 32%;height:350px;border:1px solid #dddddd;float: left;margin-right: 8px;background:#fff;"></div>
+
+        </div>
+	</div>
+</div>
+
+<script src="/static/js/echarts.js"></script>
+<script>
+    //CPU使用率[gauge图形]
+    var cpu_use = echarts.init(document.getElementById('cpu_use'));
+    option_cpu = {
+        title:{left:'center',text:'CPU使用率'},
+        tooltip:{formatter:"{a} <br/>{b}:{c}%"},
+        toolbox:{feature:{dataZoom:{yAxisIndex: 'none'},restore:{},saveAsImage:{}}},
+        series:[
+            {
+                name:'CPU使用率',
+                type:'gauge',
+                detail:{formatter:'{value}%'},
+                data:[{value:{{ cpu_use }},name:'CPU使用率'}]
+            }
+        ]
+    };
+    //cpu_use.showLoading();
+    cpu_use.setOption(option_cpu,true);
+
+    //内存状况[pie图形]
+    var mem_use = echarts.init(document.getElementById('mem_use'));
+    option_mem = {
+        title:{left:'center',text:'内存状况'},
+        tooltip:{formatter:"{a} <br/>{b}:{c}%"},
+        toolbox:{feature:{dataZoom:{yAxisIndex: 'none'},restore:{},saveAsImage:{}}},
+        series:[
+            {
+                name:'内存状况',
+                type:'pie',
+                radius: '65%',
+                //roseType: 'angle',
+                detail:{formatter:'{value}%'},
+                data:[
+                    {value:(4-{{ mem_use }})/4*100,name:'已使用'},
+                    {value:({{ mem_use }}/4*100),name:'剩余内存'},
+                ]
+            }
+        ]
+    };
+    mem_use.setOption(option_mem,true);
+
+
+    //磁盘状况[pie图形]
+    var disk_use = echarts.init(document.getElementById('disk_use'));
+    option_disk = {
+        title:{left:'center',text:'磁盘状况'},
+        tooltip:{formatter:"{a} <br/>{b}:{c}%"},
+        toolbox:{feature:{dataZoom:{yAxisIndex: 'none'},restore:{},saveAsImage:{}}},
+        series:[
+            {
+                name:'磁盘状况',
+                type:'pie',
+                radius: '65%',
+                //roseType: 'angle',
+                detail:{formatter:'{value}%'},
+                data:[
+                    {value:{{ disk_use }},name:'已使用'},
+                    {value:100-{{ disk_use }},name:'剩余磁盘'},
+                ]
+            }
+        ]
+    };
+    disk_use.setOption(option_disk,true);
+
+</script>
+{% endblock %}

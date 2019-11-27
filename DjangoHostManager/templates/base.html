@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>{% block title %}{% endblock %}</title>
+    <link rel="stylesheet" href="/static/css/global.css" />
+    <script type="application/javascript" src="/static/js/jquery-1.11.3.js"></script>
+
+</head>
+<body style="">
+
+<div class="top">
+	<div class="logo"><a href="/master/host/"><img src="/static/images/logo.png"></a><span>运维管理系统</span></div>
+	<div class="user-box">
+		<ul>
+			<li><a href="javascript:;"><span class="icon icon-user"></span>{{ request.user }}</a></li>
+			<li><a href="javascript:;"><span class="icon icon-point"></span>用户所在组：<em>{{ request.session.group }}</em></a></li>
+			<li><a href="javascript:;"><span class="icon icon-message"></span>消息</a></li>
+			<li><a href="/master/logout/"><span class="icon icon-logout"></span>退出登录</a></li>
+		</ul>
+	</div>
+</div>
+<div class="nav">
+	<dl>
+		<dt class="on"><span class="icon icon-nav icon-nav-a"></span><h2>常用</h2></dt>
+		<dd class="">
+			<ul>
+				<li><a href="/master/host/monitor/"><span class="icon icon-li icon-li-home"></span>系统概况</a></li>
+				<li><a href="/master/host/execute" ><span class="icon icon-li icon-li-code"></span>单机操作</a></li>
+				<li><a href="/master/host/pi/"><span class="icon icon-li icon-li-code"></span>批量操作</a></li>
+			</ul>
+		</dd>
+	</dl>
+	<dl>
+		<dt class="on"><span class="icon icon-nav icon-nav-b"></span><h2>主机</h2></dt>
+		<dd class="hide">
+			<ul>
+                <li><a href="/master/host/"><span class="icon icon-li icon-li-project"></span>主机管理</a></li>
+				<li><a href="/master/host/add"><span class="icon icon-li icon-li-create"></span>创建主机</a></li>
+				<!--<li><a href="#"><span class="icon icon-li icon-li-analysis"></span>主机组</a></li>-->
+				<!--<li><a href="#"><span class="icon icon-li icon-li-remark"></span>主机组</a></li>-->
+				<li><a href="/master/host/group/"><span class="icon icon-li icon-li-tag"></span>主机组</a></li>
+			</ul>
+		</dd>
+	</dl>
+    <dl>
+		<dt class="on"><span class="icon icon-nav icon-nav-b"></span><h2>监控</h2></dt>
+		<dd class="hide">
+			<ul>
+				<li><a href="/master/host/monitor/"><span class="icon icon-li icon-li-create"></span>监控管理</a></li>
+				<li><a href="/master/host/"><span class="icon icon-li icon-li-project"></span>XXXX</a></li>
+				<li><a href="/master/host/"><span class="icon icon-li icon-li-tag"></span>XXXX</a></li>
+			</ul>
+		</dd>
+	</dl>
+	<dl>
+		<dt class="on"><span class="icon icon-nav icon-nav-c"></span><h2>系统</h2></dt>
+		<dd class="hide">
+			<ul>
+				<li><a href="/master/user/repass/"><span class="icon icon-li icon-li-pswd"></span>修改密码</a></li>
+				<li><a href="/master/host/"><span class="icon icon-li icon-li-log"></span>登录日志</a></li>
+			</ul>
+		</dd>
+	</dl>
+    {% if request.user.is_superuser %}
+    <dl>
+		<dt class="on"><span class="icon icon-nav icon-nav-c"></span><h2>权限管理</h2></dt>
+		<dd class="hide">
+			<ul>
+				<li><a href="/master/index/"><span class="icon icon-li icon-li-ip"></span>用户管理</a></li>
+				<li><a href="/master/index/"><span class="icon icon-li icon-li-sub"></span>用户组管理</a></li>
+				<li><a href="/master/index/"><span class="icon icon-li icon-li-sub"></span>权限管理</a></li>
+				<li><a href="/master/index/"><span class="icon icon-li icon-li-sub"></span>日志管理</a></li>
+			</ul>
+		</dd>
+	</dl>
+    {% endif %}
+</div>
+
+{% block content %}
+
+{% endblock %}
+<!--
+<script>
+    $('.on').click(function () {
+        $('dl').children('[class="hide"]').removeClass('hide');
+        $(this).parents().siblings().children('dd').addClass('hide');
+    })
+</script>
+-->
+<script>
+    $(function () {
+        $('.nav dl').click(function () {
+            var index = $(this).index();
+            //console.log(index);
+            //存储所点击菜单的索引
+            sessionStorage.setItem("currentNav",index);
+            $('dl').children('[class="hide"]').removeClass('hide');
+            $(this).siblings().children('dd').addClass('hide');
+        });
+        window.onload = function () {
+            //获取上一个页面所点击菜单的索引
+            var index = sessionStorage.getItem("currentNav");
+            //console.log(index);
+            //根据索引设置需要停留在哪一个菜单
+            var dl = $('.nav dl').eq(index);
+            //console.log(dd.children());
+            //把该菜单下的hide去掉
+            dl.children().removeClass('hide');
+            //把该菜单的其他兄弟的子标签下的dd标签都加上hide
+            dl.siblings().children('dd').addClass('hide');
+        }
+    });
+
+</script>
+</body>
+</html>

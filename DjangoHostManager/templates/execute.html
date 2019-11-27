@@ -1,0 +1,123 @@
+
+{% extends 'base.html' %}
+
+{% block title %}远程操作主机{% endblock %}
+
+{% block content %}
+    <div class="container">
+	<div class="title"><h1>远程操作主机</h1></div>
+	<div class="main">
+
+		<div class="box">
+            <!--<form name="form1" method="post" action="/master/user/repass" onsubmit="javascript:return $.form.post(this);">-->
+            <form id="formaction" method="POST" enctype="multipart/form-data">
+                {% csrf_token %}
+            <table width="100%" border="0" cellspacing="0" cellpadding="0" class="edit-box">
+                <tbody>
+                <tr>
+                    <td width="120" valign="top" style="line-height:36px">IP地址：</td>
+                    <td><input name="ipaddress" type="text" class="form-input" id="ipaddress" style="width:360px;" placeholder="IP地址">
+                    </td>
+                </tr>
+                <tr>
+                    <td width="120" valign="top" style="line-height:36px">用户名：</td>
+                    <td><input name="remoteuser" type="text" class="form-input" id="remoteuser" style="width:360px;" placeholder="用户名">
+                    </td>
+                </tr>
+                <tr>
+                    <td width="120" valign="top" style="line-height:36px">远程密码：</td>
+                    <td><input name="remotepwd" type="password" class="form-input" id="remotepwd" style="width:360px;" placeholder="远程密码">
+                    </td>
+                </tr>
+                <tr>
+                    <td width="120" valign="top" style="line-height:36px">命令：</td>
+                    <td><input name="command" type="text" class="form-input" id="command" style="width:360px;" placeholder="命令">
+                    </td>
+                </tr>
+                <tr>
+                    <td width="100">&nbsp;</td>
+                    <td>
+                        <input type="button" id="execute" class="btn btn-blue btn-float r15" value="执行"/>
+
+                        <!--<form action="/master/host/upload/" enctype="multipart/form-data" method="POST" target="ifm1">-->
+                            {% csrf_token %}
+                            <input type="button" id="upload" class="btn btn-blue btn-float r15" value="上传"/>
+                            <input type="file" id="fileup" name="fileinput" style="margin-top:5px;" />
+{#                            <iframe id="ifm1" style="display: none" name="ifm1"></iframe>#}
+{#                            <input type="submit" onclick="iframeSubmit();" value="iframe提交" />#}
+                        <!--</form>-->
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+
+            </form>
+        </div>
+        <div class="box hide" style="background:#000;color: #fff;">
+            <span><pre id="resultcmd" style="padding:20px;"></pre></span>
+        </div>
+	</div>
+</div>
+<style>
+    .hide{display: none;}
+</style>
+<script>
+     $('#execute').click(function () {
+         /*var action = "/master/host/execute/";
+         $('#formaction').attr('action',action);*/
+        if (!$('#ipaddress').val()){alert("地址不能为空!");}
+        if (!$('#remoteuser').val()){alert("用户名不能为空!");}
+        if (!$('#remotepwd').val()){alert("密码不能为空!");}
+        if (!$('#command').val()){alert("命令不能为空!");}
+        else{
+            $.ajax({
+                url:"/master/host/execute/",
+                type:'POST',
+                data:{'ipaddress':$('#ipaddress').val(),'remoteuser':$('#remoteuser').val(),'remotepwd':$('#remotepwd').val(),'command':$('#command').val(),},
+                success:function (data, textStatus){
+                    console.log(data);
+                    $('#resultcmd').text(data.replace("<","\<"));
+                    $('#resultcmd').parent().parent().removeClass('hide')
+                },
+                error: function (XMLHttpRequest, textStatus, errorThrown) {
+                    alert(errorThrown);
+                },
+            });
+        }
+    })
+
+
+    $('#upload').click(function () {
+        /*var action = "/master/host/upload/";
+        $('#formaction').attr('action',action);*/
+        var file_obj = document.getElementById('fileup').files[0];
+        var fd = new FormData();
+        fd.append('username','root');
+        fd.append('ipaddress',$('#ipaddress').val());
+        fd.append('remoteuser',$('#remoteuser').val());
+        fd.append('remotepwd',$('#remotepwd').val());
+        fd.append('fileinput',file_obj);
+        //console.log(fd);
+        if (!$('#ipaddress').val()){alert("地址不能为空!");}
+        if (!$('#remoteuser').val()){alert("用户名不能为空!");}
+        if (!$('#remotepwd').val()){alert("密码不能为空!");}
+        else{
+            $.ajax({
+                url:"/master/host/upload/",
+                type:'POST',
+                //data:{'ipaddress':$('#ipaddress').val(),'remoteuser':$('#remoteuser').val(),'remotepwd':$('#remotepwd').val(),'fd':fd},
+                data:fd,
+                processData:false,//默认为False,序列化后再发送data,为True时不序列化直接发送data
+                contentType:false,//作用是发送信息至服务器时内容编码类型。默认值: "application/x-www-form-urlencoded"。默认值适用于大多数请求的类型。
+                success:function (data, textStatus){
+                    alert(data)
+                },
+                error: function (XMLHttpRequest, textStatus, errorThrown) {
+                    alert(errorThrown);
+                },
+            });
+        }
+    })
+
+</script>
+{% endblock %}

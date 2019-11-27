@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" href="/static/css/global.css" />
+
+</head>
+<body class="bg" style="">
+<div class="login-box">
+    <div class="login-logo">
+        <span><img src="/static/images/logo.png"></span>
+        <h2>运维平台管理系统</h2>
+    </div>
+    <div class="login-item">
+        <form name="form1" method="post" action="/master/login/">
+            {% csrf_token %}
+            <ul>
+                <li><span class="icon icon-user-login"></span><input type="text" name="username" class="noborder-input" placeholder="用户名"></li>
+                <li><span class="icon icon-user-pswd"></span><input type="password" name="password" class="noborder-input" placeholder="密码"></li>
+{#                <li><span class="icon icon-user-code"></span><input type="text" name="captcha" class="noborder-input" placeholder="验证码"><img src="/static/images/logo.png"></li>#}
+                <li><input type="submit" class="btn btn-blue" value="登陆"></li>
+            </ul>
+        </form>
+    </div>
+</div>
+{##}
+{#<script type="text/javascript">#}
+{#$(function(){#}
+{#	$('.login-item ul li img').click(function(){#}
+{#        var url = $(this).attr('src').replace(/\?time=[0-9]+/,'')+'?time='+(new Date()).getTime();#}
+{#        $(this).attr('src', url);#}
+{#    })#}
+{#})#}
+{#</script>#}
+</body>
+</html>

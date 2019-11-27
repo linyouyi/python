@@ -1,0 +1,168 @@
+
+{% extends 'base.html' %}
+
+{% block title %}远程操作主机{% endblock %}
+
+{% block content %}
+    <div class="container">
+	<div class="title"><h1>远程操作主机</h1></div>
+	<div class="main">
+
+		<div class="box">
+            <!--<form name="form1" method="post" action="/master/user/repass" onsubmit="javascript:return $.form.post(this);">-->
+            <form id="formaction" method="POST" enctype="multipart/form-data">
+                {% csrf_token %}
+            <table width="100%" border="0" cellspacing="0" cellpadding="0" class="edit-box">
+                <tbody>
+                <tr>
+                    <td width="120" valign="top" style="line-height:36px">IP地址：</td>
+                    <td>
+                        <select id="status" name="hostip" multiple="multiple" class="form-input" style="height: 100px;">
+                            <option value="">主机名</option>
+                            {% for hostip in hostinfo  %}
+                            <option value="{{ hostip.public_ip }}" root="{{ hostip.admin_root }}" pass="{{ hostip.admin_pass }}">{{ hostip.hostname }}</option>
+                            {% endfor %}
+                        </select>
+                    </td>
+                </tr>
+                <tr>
+                    <td width="120" valign="top" style="line-height:36px">IP地址：</td>
+                    <td><input name="ipaddress" type="text" class="form-input" id="ipaddress" style="width:360px;" placeholder="IP地址">
+                    </td>
+                </tr>
+                <tr>
+                    <td width="120" valign="top" style="line-height:36px">用户名：</td>
+                    <td><input name="remoteuser" type="text" class="form-input" id="remoteuser" style="width:360px;" placeholder="用户名">
+                    </td>
+                </tr>
+                <tr>
+                    <td width="120" valign="top" style="line-height:36px">远程密码：</td>
+                    <td><input name="remotepwd" type="password" class="form-input" id="remotepwd" style="width:360px;" placeholder="远程密码">
+                    </td>
+                </tr>
+                <tr>
+                    <td width="120" valign="top" style="line-height:36px">命令：</td>
+                    <td><input name="command" type="text" class="form-input" id="command" style="width:360px;" placeholder="命令/脚本,脚本先上传后执行">
+                    </td>
+                </tr>
+                <tr>
+                    <td width="100">&nbsp;</td>
+                    <td>
+                        <input type="button" id="execute" class="btn btn-blue btn-float r15" value="执行"/>
+
+                        <!--<form action="/master/host/upload/" enctype="multipart/form-data" method="POST" target="ifm1">-->
+                            {% csrf_token %}
+                            <input type="button" id="upload" class="btn btn-blue btn-float r15" value="上传"/>
+                            <input type="file" id="fileup" name="fileinput" style="margin-top:5px;" />
+{#                            <iframe id="ifm1" style="display: none" name="ifm1"></iframe>#}
+{#                            <input type="submit" onclick="iframeSubmit();" value="iframe提交" />#}
+                        <!--</form>-->
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+
+            </form>
+        </div>
+        <div class="box hide" style="background:#000;color: #fff;">
+            <span><pre id="resultcmd" style="padding:20px;"></pre></span>
+        </div>
+	</div>
+</div>
+<style>
+    .hide{display: none;}
+</style>
+<script>
+    $('select#status').click(function(){
+        //root = $(this).find("option:selected").attr('root');
+        //pass = $(this).find("option:selected").attr('pass');
+        //$('#remoteuser').val(root);
+        //$('#remotepwd').val(pass);
+        //////////////////////
+        //var arr = [];
+        //$("select#status").each(function () {
+        //   root = $('#status option:selected').attr('root');
+        //    arr.push(root);
+        //});
+        //alert(arr);
+        /////////////////////
+        var sta = document.getElementById('status');
+        //var index = o.selectedIndex;
+        var ip = "";
+        var str = "";
+        var pwd = "";
+        for (i=0;i<sta.length;i++){
+            if (sta.options[i].selected){
+                //str += o.options[i].value + ",";
+                ip += sta.options[i].getAttribute('value') + ",";
+                str += sta.options[i].getAttribute('root') + ",";
+                pwd += sta.options[i].getAttribute('pass') + ",";
+           }
+        }
+        //alert(str);
+        $('#remoteuser').val(str);
+        $('#remotepwd').val(pwd);
+        $('#ipaddress').val(ip);
+
+    });
+
+     $('#execute').click(function () {
+         /*var action = "/master/host/execute/";
+         $('#formaction').attr('action',action);*/
+        if (!$('#ipaddress').val()){alert("地址不能为空!");}
+        if (!$('#remoteuser').val()){alert("用户名不能为空!");}
+        if (!$('#remotepwd').val()){alert("密码不能为空!");}
+        if (!$('#command').val()){alert("命令不能为空!");}
+        else{
+            $.ajax({
+                url:"/master/host/pi/",
+                type:'POST',
+                data:{'ipaddress':$('#ipaddress').val(),'remoteuser':$('#remoteuser').val(),'remotepwd':$('#remotepwd').val(),'command':$('#command').val(),},
+                success:function (data, textStatus){
+                    console.log(data);
+                    //$('#resultcmd').text(data.replace("<","\<"));
+                    $('#resultcmd').html(data);
+                    $('#resultcmd').parent().parent().removeClass('hide')
+                },
+                error: function (XMLHttpRequest, textStatus, errorThrown) {
+                    alert(errorThrown);
+                },
+            });
+        }
+    })
+
+
+    $('#upload').click(function () {
+        /*var action = "/master/host/upload/";
+        $('#formaction').attr('action',action);*/
+        var file_obj = document.getElementById('fileup').files[0];
+        var fd = new FormData();
+        fd.append('username','root');
+        fd.append('ipaddress',$('#ipaddress').val());
+        fd.append('remoteuser',$('#remoteuser').val());
+        fd.append('remotepwd',$('#remotepwd').val());
+        fd.append('fileinput',file_obj);
+        //console.log(fd);
+        if (!$('#ipaddress').val()){alert("地址不能为空!");}
+        if (!$('#remoteuser').val()){alert("用户名不能为空!");}
+        if (!$('#remotepwd').val()){alert("密码不能为空!");}
+        else{
+            $.ajax({
+                url:"/master/host/upload/",
+                type:'POST',
+                //data:{'ipaddress':$('#ipaddress').val(),'remoteuser':$('#remoteuser').val(),'remotepwd':$('#remotepwd').val(),'fd':fd},
+                data:fd,
+                processData:false,
+                contentType:false,
+                success:function (data, textStatus){
+                    alert(data)
+                },
+                error: function (XMLHttpRequest, textStatus, errorThrown) {
+                    alert(errorThrown);
+                },
+            });
+        }
+    })
+
+</script>
+{% endblock %}

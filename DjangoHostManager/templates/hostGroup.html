@@ -1,0 +1,166 @@
+
+{% extends 'base.html' %}
+
+{% block title %}主机{% endblock %}
+
+{% block content %}
+    <div class="container">
+	    <div class="title">
+		<h1>数据中心</h1>
+
+		<div class="select-bar">
+			<div class="name">正在查看项目：</div>
+{#			<select name="project" style="display: none;">#}
+{#				<option value="/index/project/view/id/a8cab3400bd0" selected="selected"><span><i>XX公司</i></span></option>#}
+{#            </select>#}
+            <div class="form-select">
+                <div class="form-select-selected"><span>XX公司</span></div>
+                <ul><li class="form-child-selected">啊啊啊啊</li></ul>
+            </div>
+		</div>
+
+
+        <div class="box-wrapper box-no-padding">
+            <table width="100%" border="0" cellspacing="0" cellpadding="0" class="box-table">
+                <thead>
+                    <tr>
+                        <th width="17">序号</th>
+                        <th width="60">主机组</th>
+                        <th width="80">操作</th>
+                    </tr>
+                </thead>
+                <tbody>
+
+                {% for row in host_group %}
+                    <tr item-id="301" gid="{{ row.id }}" gname="{{ row.name }}">
+
+                        <td><span class="center">{{ forloop.counter }}</span></td>
+                        <td><span class="cn">{{ row.name }}</span></td>
+                        <td>
+                            <a href="javascript:;" class="btn  btn-float hostgroupadd" style="color:#a6aebf">添加</a>
+                            <a href="javascript:;" class="btn  btn-float hostgroupedit" style="color:#a6aebf">编辑</a>
+                            <a href="javascript:;" class="btn  btn-float hostgourpdel" data="{{ row.id }}" style="color:#a6aebf">删除</a>
+                        </td>
+
+                    </tr>
+                {% endfor %}
+
+                </tbody>
+            </table>
+			</div>
+		</div>
+    </div>
+
+
+
+<style>
+.hide{display: none;}
+.shade{position: fixed;top:0;left:0;right:0;bottom:0;background:black;opacity:0.6;z-index:100;}
+.del-model{position:fixed;height: 33px;width: 180px;top:45%;left: 45%;z-index:101;border:1px solid black;background:white;}
+.add-model,.edit-model{
+            position: fixed;
+            height: 300px;
+            width: 400px;
+            top: 100px;
+            left: 50%;
+            z-index: 101;
+            border: 1px solid red;
+            background: white;
+            margin-left: -200px;
+        }
+</style>
+
+<div class="shade hide"></div>
+<div class="add-model hide">
+    <form method="POST" action="/host/">
+    {% csrf_token %}
+        <div class="group">
+            <input id="hostgroup" type="text" placeholder="主机组" >
+        </div>
+        <!--<input type="submit" value="提交">-->
+        <a id="ajax_submit" class="btn btn-float btn-blue r15">悄悄提交</a>
+        <input type="button" value="取消" id="cancel">
+    </form>
+</div>
+<div class="edit-model hide">
+    <form id="edit_form" method="POST" action="/master/host/group/edit/">
+        {% csrf_token %}
+        <input type="text" name="gid" style="display: none">
+        <input type="text" placeholder="主机组" name="hostgroupname">
+        <input type="button" id="editform" value="确认修改">
+        <input type="button" value="取消" id="cancel1">
+    </form>
+</div>
+<div class="del-model hide">
+    <form id="del" method="POST">
+        {% csrf_token %}
+        <input type="submit" class="btn  btn-float btn-blue r15" value="确定删除">
+        <input type="button" class="btn  btn-float btn-blue r15" id="cancel2" value="取消">
+    </form>
+</div>
+<script type="application/javascript" src="/static/js/jquery-1.11.3.js"></script>
+<script>
+    $(function(){
+        //添加主机组
+         $('.hostgroupadd').click(function () {
+                $('.shade,.add-model').removeClass('hide')
+         });
+         $('#ajax_submit').click(function(){
+                $.ajax({
+                    url:"/master/host/group/add/",
+                    type:"GET",
+                    data:{'hostgroupname':$('#hostgroup').val(),},
+
+                    {#data:{"user":$('#host').val()},#}
+                    //#执行成功后服务器返回的数据在data里面
+                    success:function (data) {
+                        console.log()
+                        if (data == 'OK'){
+                            location.reload()
+                        }else{
+                            alert(data)
+                        }
+                    }
+                })
+            });
+        //编辑主机组
+        $('.hostgroupedit').click(function(){
+            $('.shade,.edit-model').removeClass('hide');
+            //获取当点编辑按钮
+            var gid = $(this).parent().parent().attr('gid');
+            var gname = $(this).parent().parent().attr('gname');
+            $('#edit_form').find('input[name="gid"]').val(gid);
+            $('#edit_form').find('input[name="hostgroupname"]').val(gname);
+        });
+        $('#editform').click(function () {
+            $.ajax({
+                url:"/master/host/group/edit/",
+                type:"POST",
+                data:$('#edit_form').serialize(),
+                success:function (data) {
+                    if (data=='OK'){
+                        alert("修改成功!")
+                        location.reload()
+                    }
+                    else{alert(data)}
+                }
+            });
+        })
+
+        $('.hostgourpdel').click(function(){
+            {#获取当前点击对象主机的id#}
+            var value = $(this).attr("data");
+            var action = "/master/host/group/del/" + value + "/";
+            {#给form添加action属性并设置url#}
+            $('#del').attr('action',action);
+            $('.shade,.del-model').removeClass('hide');
+        });
+
+        $('#cancel,#cancel1,#cancel2').click(function(){
+            $('.shade,.add-model').addClass('hide');
+            $('.shade,.edit-model').addClass('hide');
+            $('.shade,.del-model').addClass('hide');
+        });
+    })
+</script>
+{% endblock %}

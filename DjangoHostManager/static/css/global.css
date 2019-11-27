@@ -1,0 +1,251 @@
+@charset "utf-8";
+*{margin:0px; padding:0px; font-family:"微软雅黑"}
+img{border:none}
+ul{list-style:none}
+a{text-decoration:none}
+body{background:#e2e6f1}
+
+
+/**** form css ****/
+
+.form-select{height:32px;  position:relative; }
+.form-select .form-select-selected{ height:30px;border-radius:2px;padding-left:10px; background:#fff; border:1px #e6e6e6 solid;  line-height:30px; font-size:12px; position:relative; color:#666; cursor:pointer;}
+.form-select .form-select-selected span{display:block; margin-right:25px; overflow:hidden}
+.form-select .form-select-selected i{display:block; width: 0; height: 0; border-left: 4px solid transparent; border-right: 4px solid transparent; border-top: 3px solid #ccc; position:absolute; right:10px; top:50%; margin-top:-1px;}
+.form-select .form-select-selected.click{border-color:#ccc;box-shadow: 0 1px 3px rgba(0,0,0,.15);}
+.form-select ul{width:100%; position:absolute; top:36px; left:0px; box-sizing: border-box; max-height:320px; z-index:999; overflow-y:auto; border:1px #ccc solid; border-radius:2px; background:#fff;box-shadow: 0 1px 3px rgba(0,0,0,.15); padding:5px 0px; display:none }
+.form-select ul li{line-height:32px; height:32px; font-size:12px; color:#999; padding-left:10px; cursor:pointer;white-space: nowrap;}
+.form-select ul li:hover{background:#f6f6f6}
+.form-select ul li.form-child-selected{background:#36bb5f; color:#fff}
+.form-input{display:block; box-sizing: border-box; height:32px; font-size:12px; border:1px #e6e6e6 solid; line-height:32px;outline:none;width:100%}
+.form-checkbox{outline:0; -webkit-appearance: none; width:16px; height:16px;box-sizing:border-box; border:1px #ccc solid; border-radius:2px; box-shadow: rgba(0, 0, 0, 0.1) 0px 1px 3px 0px inset; cursor:pointer}
+.form-checkbox:checked{border-color:#009fd9; background:url(../images/radio_checked.png) no-repeat -1px 0px;}
+.form-switch{-webkit-user-select: none; -ms-user-select: none;-moz-user-select: none;}
+.form-switch ul li{width:36px;height:22px; line-height: 22px;border: 1px solid #d2d2d2; border-radius: 20px; font-size:12px; position:relative; padding:0px 10px; cursor:pointer; display:none}
+.form-switch ul li em{display:block; width:12px; height:12px; border-radius:10px; background:#d2d2d2; position:absolute; top:6px;}
+.form-switch ul li.on{background:#36bb5f; color:#fff; border-color:#36bb5f}
+.form-switch ul li.on em{background:#fff; right:6px;}
+.form-switch ul li.off{text-indent:12px}
+.form-switch ul li.off em{left:6px}
+.form-switch ul li.checked{display:block}
+/**** col css ****/
+.hide{display:none;}
+.col{float:left}
+.col-40{width:40%}
+.col-60{width:60%}
+.col-25{width:25%}
+.t15{margin-top:15px}
+.r25{margin-right:25px}
+.r15{margin-right:15px}
+.r10{margin-right:10px}
+.b15{margin-bottom:15px}
+.box{box-shadow: 0 1px 3px rgba(0,0,0,.15);}
+.white-box{padding:10px 20px; background:#fff; border-radius:3px}
+.box-head{ background:#eef1f7; height:42px; border-bottom:1px #dadfed solid}
+.box-head h2{float:left; line-height:42px; margin-left:10px; font-size:16px; color:#5a6779}
+.box-head .round{ width:4px; height:4px; border-radius:4px; overflow:hidden; background:#d1d6de; float:left; margin:19px 12px 0px 12px}
+.box-head ul,.box-head ul li{float:left}
+.box-head ul li{height:42px; line-height:42px; margin-right:15px; position:relative}
+.box-head ul li a{color:#657386; font-size:12px}
+.box-head ul li.on a{color:#15ab44}
+.box-head ul li.on:after{content:""; display:block; width: 0; height: 0; border-left: 6px solid transparent; border-right: 6px solid transparent; border-bottom: 5px solid #15ab44; position:absolute; left:50%; bottom:-1px; margin-left:-6px}
+.search-box{padding:15px; background:#fff;border-bottom:1px #dadfed solid; height:32px}
+.search-box .search-item{float:left; box-sizing: border-box; padding-right:15px}
+.search-box .search-item:last-of-type{padding-right:0px}
+.box-title{height:40px; background:#fff; line-height:40px; border-bottom:1px #dadfed solid; position:relative}
+.box-title h3{font-size:16px; color:#5a6779; font-weight:normal; text-indent:15px}
+.box-title .select-bar{ position:absolute; height:24px; top:8px; right:15px; line-height:24px}
+.box-title .select-bar .form-select{height:24px}
+.box-title .select-bar .form-select .form-select-selected{height:22px; line-height:22px}
+.box-title .select-bar .form-select ul{top:26px}
+.box-title .select-bar>a{ font-size:12px; color:#f75656}
+.box-title .select-bar>a:hover{text-decoration:underline}
+.box-wrapper{background:#eef1f7; padding:15px; border-radius:0px 0px 3px 3px}
+.box-no-padding{padding:0px}
+.box-table>thead>tr>th,.box-table>tbody>tr>td{  border-bottom:1px #dadfed solid; border-left:1px #dadfed solid;padding-left:5px;}
+.box-table>thead>tr>th{background:#eef1f7; font-weight:normal;font-size:12px;height:38px; text-align:left; color:#657386}
+.box-table>tbody>tr>td{background:#fff; color:#8798b0; font-size:12px; padding:12px 0px 12px 5px}
+.box-table>tbody>tr>td.center,.box-table>thead>tr>th.center{padding-left:10px; text-align:center; padding-right:10px}
+.box-table>thead>tr>th:first-of-type,.box-table>tbody>tr>td:first-of-type{border-left:none}
+.box-table>tbody>tr:last-of-type>td{ border-bottom:none}
+.box-table>tbody>tr:hover>td{background:#f3f5fa}
+.box-table>tbody>tr>td p{line-height:20px; height:20px}
+.box-table>tbody>tr>td .btn{font-size:12px}
+.edit-box{background:#fff; border-radius:3px; padding:20px 0px}
+.edit-box tr td{padding:8px 0px; font-size:12px}
+.edit-box tr>td:first-of-type{text-align:center; color:#999}
+.edit-box tr td .form-input{width:unset}
+.c1{ color:#f75656}
+.c2{ color:#1e9fff}
+.gray{color:#686069;line-height:20px;white-space: nowrap;}
+a.gray:hover{color:#f75656}
+a.c2:hover{text-decoration:underline}
+.c3{ background:#1e9fff; display:block; float:left; height:20px; line-height:20px; color:#fff; padding:0px 5px; border-radius:2px}
+.c3:hover{background:#0c90f2}
+.c4{color:#36bb5f}
+.c5{background:#f75656; float:left; display:block; height:20px; line-height:20px; padding:0px 5px; border-radius:2px; color:#fff}
+a.c5:hover{background:#e14a4a}
+.c6{background:#657386; float:left; display:block; height:20px; line-height:20px; padding:0px 5px; border-radius:2px; color:#eef1f7}
+a.c6:hover{color:#fff}
+.cn{color:#f00;}
+.meta{margin-top:10px}
+.meta p{line-height:20px; font-size:12px; color:#666}
+
+
+.btn{ height:32px; border:none; display:block;box-sizing: border-box; padding:0px 15px; cursor:pointer; border-radius:2px; line-height:32px; box-shadow: 0 1px 3px rgba(0,0,0,.15); font-size:14px; background:#eef1f7; color:#657386}
+.btn:hover{background:#f4f6fb; color:#5d6a7c}
+.btn-float{float:left}
+.btn-green{background:#36bb5f; color:#fff}
+.btn-green:hover{background:#46ce70; color:#fff}
+.btn-orange{background:#f7a751; color:#fff}
+.btn-orange:hover{background:#fbaf5e; color:#fff}
+.btn-blue{background:#1e9fff; color:#fff}
+.btn-blue:hover{background:#2fa6ff; color:#fff}
+/**** icon css****/
+.icon{background:url(../images/icon.png) no-repeat; display:block}
+.icon-nav{width:18px; height:18px}
+.icon-nav-a{background-position:-15px -540px}
+.icon-nav-b{background-position:-15px -557px}
+.icon-nav-c{background-position:-15px -575px}
+.on>.icon-nav-a{background-position:-49px -540px}
+.on>.icon-nav-b{background-position:-49px -557px}
+.on>.icon-nav-c{background-position:-49px -575px}
+.icon-li{width:12px; height:12px}
+.icon-li-home{ background-position:-19px -15px}
+.icon-li-tag{ background-position:-19px -48px}
+.icon-li-code{ background-position:-19px -83px}
+.icon-li-check{ background-position:-19px -116px}
+.icon-li-create{ background-position:-19px -151px}
+.icon-li-project{ background-position:-19px -186px}
+.icon-li-analysis{ background-position:-19px -219px}
+.icon-li-remark{ background-position:-19px -251px; height:14px}
+.icon-li-pswd{ background-position:-19px -283px; height:14px}
+.icon-li-log{ background-position:-19px -319px; height:14px}
+.icon-li-ip{ background-position:-19px -351px; height:14px}
+.icon-li-sub{ background-position:-19px -380px; height:14px}
+
+.on>.icon-li-home{ background-position:-52px -15px}
+.on>.icon-li-tag{ background-position:-52px -48px}
+.on>.icon-li-code{ background-position:-52px -83px}
+.on>.icon-li-check{ background-position:-52px -116px}
+.on>.icon-li-create{ background-position:-52px -151px}
+.on>.icon-li-project{ background-position:-52px -186px}
+.on>.icon-li-analysis{ background-position:-52px -219px}
+.on>.icon-li-remark{ background-position:-52px -251px; height:14px}
+.on>.icon-li-pswd{ background-position:-52px -283px; height:14px}
+.on>.icon-li-log{ background-position:-52px -319px; height:14px}
+.on>.icon-li-ip{ background-position:-52px -351px; height:14px}
+.on>.icon-li-sub{ background-position:-52px -380px; height:14px}
+
+.icon-user{ width:12px; height:14px; background-position:-19px -416px;}
+.icon-point{ width:10px; height:14px; background-position:-54px -416px;}
+.icon-message{ width:13px; height:14px; background-position:-18px -450px;}
+.icon-logout{ width:14px; height:14px; background-position:-52px -451px;}
+.icon-calendar{width:15px; height:15px; background-position:-15px -605px}
+.icon-report{ width:18px; height:15px; background-position:-46px -605px}
+
+.icon-user-login{ width:12px; height:14px; background-position:-48px -631px}
+.icon-user-pswd{width:12px; height:14px; background-position:-18px -653px}
+.icon-user-code{width:12px; height:12px; background-position:-48px -653px}
+/**** common css****/
+.clear{clear:both}
+.top{height:50px; background:#30343f; position:fixed; width:100%; top:0px; left:0px; z-index:999}
+.logo{height:50px; background:#3d7fd3; width:150px; overflow:hidden; float:left}
+.logo a{margin-top:2px; margin-left:6px; display:inline; }
+.logo a img{width: 30px;height: 30px;margin-top:9px;}
+.logo span{color:#fff;font-size:16px;font-weight: bold;text-align:center;position: fixed; top:12px;margin-left: 5px;}
+.user-box{float:right; height:30px; margin-top:10px}
+.user-box ul li{float:left; height:30px; line-height:30px; position:relative; padding-left:30px; padding-right:20px; border-right:1px #202b3a solid; border-left:1px #575e67 solid;}
+.user-box ul li:first-of-type{border-left:none}
+.user-box ul li:last-of-type{border-right:none}
+.user-box ul li a{font-size:12px; color:#fff}
+.user-box ul li span{position:absolute; top:9px; left:10px}
+.user-box ul li a em{font-style:normal; font-size:18px; color:#f2f425;}
+.user-box ul li a:hover{color:#f2f425}
+.nav{position:fixed; width:150px; height:1000px; top:50px; left:0px; background:#30343f}
+.nav>dl{border-bottom:1px #15171c solid; border-top:1px #3e434e solid; padding:10px 0}
+.nav>dl:first-of-type{border-top:none; margin-top:20px}
+.nav>dl:last-of-type{border-bottom:none}
+.nav>dl>dt{height:36px; line-height:36px; padding-left:46px; position:relative;}
+.nav>dl>dt>span{position:absolute; top:9px; left:20px}
+.nav>dl>dt>h2{color:#fff; font-size:16px}
+.nav>dl>dd{padding: 0; }
+.nav>dl>dd>ul>li{height:36px; line-height:36px}
+.nav>dl>dd>ul>li a{font-size:14px; color:#ccc; display:block; height:36px; position:relative; padding-left:46px}
+.nav>dl>dd>ul>li a .icon{position:absolute; top:11px; left:23px}
+.nav dl dd ul>li>a:hover{background:#393d49}
+.nav dl dd ul>li>a.on{color:#f2f425; background:#23262e}
+.container{margin:50px 0px 0px 150px}
+.title{height:48px; background:#eef1f8; border-bottom:1px #c0c4cf solid; padding:0px 15px; position:relative}
+.title h1{line-height:48px; height:48px; font-size:18px; font-weight:normal; color:#5a6779}
+.title h1 span{font-size:12px; color:#fa7821; margin-left:3px}
+.title .select-bar{position:absolute; top:8px; right:15px;}
+.title .select-bar .name{display:block;line-height:32px; font-size:12px;  float:left; color:#999; margin-right:5px}
+.title .select-bar .form-select{ float:left}
+.main{margin:15px;}
+.pages{ height:36px; margin-top:15px;font-size:14px;}
+.pages .rows{float:left; line-height:36px; color:#657386}
+.pages .rows span{color:#f00; margin:0px 5px}
+.pages ul{float:right;}
+.pages ul li{float:left; box-shadow: 0 1px 1px rgba(0,0,0,.15); overflow:hidden}
+.pages ul li:first-of-type{border-left:1px #dadfed solid; border-radius:5px 0px 0px 5px}
+.pages ul li:last-of-type{border-radius:0px 5px 5px 0px}
+.pages ul li a{color:#657386;display:block; height:36px; box-sizing:border-box; padding:0px 15px; background:#eef1f7;  border-right:1px #dadfed solid; line-height:34px;}
+.pages ul li a:hover{ background:#dde3ee}
+.pages ul li.on a{background:#fff}
+.bg{background:url(/static/images/bg.jpg) repeat;}
+.login-box{ width:320px; position:absolute; top:50%; left:50%; margin-left:-160px; margin-top:-200px}
+.login-logo{height:36px; position:relative; line-height:36px;}
+.login-logo span,.login-logo span img{ display:block; width:60px; height:40px;}
+.login-logo span{position:absolute; top:0px; left:50%; margin-left:-110px;}
+.login-logo h2{color:#fff; margin-left:70px; font-size:20px; text-align:center}
+.login-item{margin-top:30px}
+.login-item ul li{height:36px; border-radius:2px; border:1px #4b545c solid; margin-bottom:15px; position:relative}
+.login-item ul li .noborder-input{background:none; margin-top:6px; color:#fff; margin-left:32px}
+.login-item ul li:last-of-type{border:none}
+.login-item ul li .btn{ width:100%; height:36px; line-height:36px;}
+.login-item ul li .icon{position:absolute; top:12px; left:10px}
+.login-item ul li img{display:block; top:0px; right:0px; position:absolute; cursor:pointer}
+/**** home css ****/
+.last-day-data{height:48px}
+.last-day-data a{display:block; height:48px; background:#fff;color:#787970; line-height:48px; margin-right:15px; font-size:12px; border-radius:2px; position:relative; padding-left:60px; overflow:hidden}
+.last-day-data a .day{display:block; position:absolute; height:48px; top:0px; left:0px; width:50px; text-align:center; background:#cb6667; color:#fff; font-size:12px}
+.last-day-data a .number{ font-size:18px; color:#787970; margin-right:3px}
+.last-day-data a.b .day{background:#478de3}
+.last-day-data a.c .day{background:#5669d4}
+.last-day-data a.d .day{background:#bdc2d0}
+.last-day-data a:hover .number{color:#f00}
+.last-day-data a.a:hover .day{background:#ca4445}
+.last-day-data a.b:hover .day{background:#1469d1}
+.last-day-data a.c:hover .day{background:#4c5cb6}
+.last-day-data a.d:hover .day{background:#9ba1b0}
+
+#home-chart{height:300px}
+.option-box{height:32px; margin-bottom:15px; position:relative}
+.option-box .day{margin-right:10px}
+.date-diy{ border-radius:2px; height:32px; box-sizing: border-box; background:#fff; float:left; width:300px; box-shadow: 0 1px 3px rgba(0,0,0,.15); position:relative}
+.date-diy .icon{position:absolute; top:8px; left:8px}
+.noborder-input{border:none; box-sizing: border-box; display:block; height:24px; margin:4px 0px 0px 28px; outline:none; color:#8798b0; font-size:14px; position:relative}
+.date-diy .btn{position:absolute; top:0px; right:0px}
+.option-box .report-btn{ position:absolute; top:0px; right:0px}
+.option-box .report-btn span{float:left; margin-top:8px; margin-right:3px}
+.select-province{width:600px; background:#fff; float:left; padding:0px 10px 10px 0px;border:1px #eee solid; margin-top:10px}
+.select-province ul li{float:left; padding:0px 15px; height:24px; line-height:24px;border:1px #f4f6fb solid; color: #5d6a7c; margin-left:10px; margin-top:10px; cursor:pointer; border-radius:3px}
+.select-province ul li:hover{background:#f4f6fb}
+.select-province ul li.selected{color:#fff; background:#36bb5f; border-color:#36bb5f}
+.select-province ul li.selected:hover{background:#46ce70; }
+.select-hours{width:545px}
+.select-hours a{margin-bottom:1px; margin-right:1px; box-shadow:none; font-size:12px}
+.item-box{width:600px; margin-top:15px}
+.code-box{background: #eef1f7; color: #657386; font-size:12px; padding:10px; line-height:20px; border:1px #dadfed solid; border-radius:3px; margin-bottom:15px}
+.code-intro p{margin-bottom:15px;font-size:13px; color:#657386; line-height:22px}
+.code-intro h2{color:#36bb5f; font-size:18px; margin-bottom:15px}
+
+.remark-box{min-height:40px; position:relative; padding-left:36px; cursor:pointer}
+.remark-box .date{color:#b6c0cd}
+.remark-box .con-txt{height:auto}
+.remark-rows{width:24px; height:24px; border-right:1px #99cef6 solid; border-radius:24px; line-height:24px; text-align:center; float:left; margin-right:15px; position:absolute; top:7px; left:0px; color:#82bce8}
+.remark-list h2{font-size:24px; margin-bottom:20px; text-align:center}
+.remark-list li{line-height:24px; border-bottom:1px #eee solid;  padding:6px 0; min-height:24px; position:relative; font-size:12px; padding-right:140px}
+.remark-list li .date{position:absolute; top:6px; right:10px; font-size:12px; color:#b6c0cd; display:block; height:24px; line-height:24px}
+.remark-list li:last-of-type{border-bottom:none}

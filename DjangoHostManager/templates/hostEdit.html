@@ -1,0 +1,109 @@
+
+{% extends 'base.html' %}
+
+{% block title %}修改主机{% endblock %}
+
+{% block content %}
+    <div class="container">
+	<div class="title"><h1>修改主机</h1></div>
+	<div class="main">
+
+		<div class="box">
+				<form name="hostedit" method="post" action="/master/host/edit/{{ host_obj.id }}/">
+                    {% csrf_token %}
+				<table width="100%" border="0" cellspacing="0" cellpadding="0" class="edit-box">
+					<tbody><tr>
+						<td width="120" valign="top" style="line-height:36px">主机名：</td>
+						<td><input name="hostname" type="text" class="form-input" id="hostname" value="{{ host_obj.hostname }}" style="width:360px;" placeholder="主机名">
+						</td>
+					</tr>
+					<tr>
+						<td width="120" valign="top" style="line-height:36px">公网ip：</td>
+						<td><input name="public_ip" type="text" class="form-input" id="public_ip" value="{{ host_obj.public_ip }}" style="width:360px;" placeholder="公网ip">
+						</td>
+					</tr>
+					<tr>
+						<td width="120" valign="top" style="line-height:36px">内网ip：</td>
+						<td><input name="private_ip" type="text" class="form-input" id="private_ip"  value="{{ host_obj.private_ip }}" style="width:360px;" placeholder="内网ip">
+						</td>
+					</tr>
+                    <tr>
+						<td width="120" valign="top" style="line-height:36px">系统：</td>
+						<td><input name="system" type="text" class="form-input" id="system"  value="{{ host_obj.system }}" style="width:360px;" placeholder="系统">
+						</td>
+					</tr>
+                    <tr>
+						<td width="120" valign="top" style="line-height:36px">CPU：</td>
+						<td><input name="cpu_version" type="text" class="form-input" id="cpu_version" value="{{ host_obj.cpu_version }}" style="width:360px;" placeholder="CPU">
+						</td>
+					</tr>
+                    <tr>
+						<td width="120" valign="top" style="line-height:36px">CPU核数：</td>
+						<td><input name="cpu_thread_num" type="text" class="form-input" id="cpu_thread_num" value="{{ host_obj.cpu_thread_num }}" style="width:360px;" placeholder="CPU核数">
+						</td>
+					</tr>
+                    <tr>
+						<td width="120" valign="top" style="line-height:36px">内存：</td>
+						<td><input name="memory" type="text" class="form-input" id="memory" value="{{ host_obj.memory }}" style="width:360px;" placeholder="内存">
+						</td>
+					</tr>
+                    <tr>
+						<td width="120" valign="top" style="line-height:36px">硬盘：</td>
+						<td><input name="hard_disk" type="text" class="form-input" id="hard_disk" value="{{ host_obj.hard_disk }}" style="width:360px;" placeholder="硬盘">
+						</td>
+					</tr>
+                    <tr>
+						<td width="120" valign="top" style="line-height:36px">用户名：</td>
+						<td><input name="admin_root" type="text" class="form-input" id="admin_root" value="{{ host_obj.admin_root }}" style="width:360px;" placeholder="请再次输入新密码">
+						</td>
+					</tr>
+                    <tr>
+						<td width="120" valign="top" style="line-height:36px">密码：</td>
+						<td><input name="admin_pass" type="text" class="form-input" id="admin_pass" value="{{ host_obj.admin_pass }}" style="width:360px;" placeholder="密码">
+						</td>
+					</tr>
+                    <tr>
+						<td width="120" valign="top" style="line-height:36px">端口：</td>
+						<td><input name="port" type="text" class="form-input" id="port" value="{{ host_obj.port }}" style="width:360px;" placeholder="端口">
+						</td>
+					</tr>
+                    <tr>
+						<td width="120" valign="top" style="line-height:36px">主机组：</td>
+						<td><select name="host_group" class="form-input">
+{#                            <option value="{{ host_obj.hostgroup_id }}">主机组</option>#}
+                            {% for hg in hostgroup %}
+                            <option value="{{ hg.id }}" {% if host_obj.hostgroup_id == hg.id %}selected{% endif %}>{{ hg.name }}</option>
+                            {% endfor %}
+                        </select></td>
+					</tr>
+                    <tr>
+						<td width="120" valign="top" style="line-height:36px">业务组：</td>
+						<td><select name="business" class="form-input">
+{#                            <option value="">业务组</option>#}
+                            {% for bs in business %}
+                            <option value="{{ bs.id }}" {% if host_obj.business_id == bs.id %}selected{% endif %}>{{ bs.name }}</option>
+                            {% endfor %}
+                        </select></td>
+					</tr>
+                    <tr>
+						<td width="120" valign="top" style="line-height:36px">状态：</td>
+						<td><select name="status" class="form-input">
+{#                            <option value="">{{ host_obj.status_choice.0.1 }}</option>#}
+{#                            <option value="0">downline</option>#}
+{#                            <option value="1">online</option>#}
+                            {% for sc in host_obj.status_choice %}
+                            <option value="{{ forloop.counter0 }}" {% if host_obj.status == forloop.counter0 %}selected{% endif %}>{{ sc.1 }}</option>
+                            {% endfor %}
+                        </select>
+						</td>
+					<tr>
+						<td width="100">&nbsp;</td>
+						<td><input type="submit" class="btn btn-blue btn-float r15" value="确认更改"></td>
+					</tr>
+				</tbody>
+                </table>
+
+		</form></div>
+	</div>
+</div>
+{% endblock %}

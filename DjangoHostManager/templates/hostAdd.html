@@ -1,0 +1,115 @@
+
+{% extends 'base.html' %}
+
+{% block title %}添加主机{% endblock %}
+
+{% block content %}
+    <div class="container">
+	<div class="title"><h1>添加主机</h1></div>
+	<div class="main">
+
+		<div class="box">
+				<form name="form1" method="post" action="/master/host/add/" >
+                {% csrf_token %}
+				<table width="100%" border="0" cellspacing="0" cellpadding="0" class="edit-box">
+					<tbody>
+                    <tr>
+						<td width="120" valign="top" style="line-height:36px">主机名：</td>
+						<td><input name="hostname" type="text" class="form-input" id="hostname" style="width:360px;" placeholder="主机名">
+						</td>
+					</tr>
+                    <tr>
+						<td width="120" valign="top" style="line-height:36px">别名：</td>
+						<td><input name="alias" type="text" class="form-input" id="alias" style="width:360px;" placeholder="别名,最好是英文">
+						</td>
+					</tr>
+					<tr>
+						<td width="120" valign="top" style="line-height:36px">公网ip：</td>
+						<td><input name="public_ip" type="text" class="form-input" id="public_ip" style="width:360px;" placeholder="公网ip">
+						</td>
+					</tr>
+					<tr>
+						<td width="120" valign="top" style="line-height:36px">内网ip：</td>
+						<td><input name="private_ip" type="text" class="form-input" id="private_ip" style="width:360px;" placeholder="内网ip">
+						</td>
+					</tr>
+                    <tr>
+						<td width="120" valign="top" style="line-height:36px">系统：</td>
+						<td><input name="system" type="text" class="form-input" id="system" style="width:360px;" placeholder="系统">
+						</td>
+					</tr>
+                    <tr>
+						<td width="120" valign="top" style="line-height:36px">CPU型号：</td>
+						<td><input name="cpu_version" type="text" class="form-input" id="cpu_version" style="width:360px;" placeholder="CPU">
+						</td>
+					</tr>
+                    <tr>
+						<td width="120" valign="top" style="line-height:36px">CPU核数：</td>
+						<td><input name="cpu_thread_num" type="text" class="form-input" id="cpu_thread_num" style="width:360px;" placeholder="CPU核数">
+						</td>
+					</tr>
+                    <tr>
+						<td width="120" valign="top" style="line-height:36px">内存大小：</td>
+						<td><input name="memory" type="text" class="form-input" id="memory" style="width:360px;" placeholder="内存">
+						</td>
+					</tr>
+                    <tr>
+						<td width="120" valign="top" style="line-height:36px">硬盘大小：</td>
+						<td><input name="hard_disk" type="text" class="form-input" id="hard_disk" style="width:360px;" placeholder="硬盘">
+						</td>
+					</tr>
+                    <tr>
+						<td width="120" valign="top" style="line-height:36px">用户名：</td>
+						<td><input name="admin_root" type="text" class="form-input" id="admin_root" style="width:360px;" placeholder="用户名">
+						</td>
+					</tr>
+                    <tr>
+						<td width="120" valign="top" style="line-height:36px">密码：</td>
+						<td><input name="admin_pass" type="text" class="form-input" id="admin_pass" style="width:360px;" placeholder="密码">
+						</td>
+					</tr>
+                    <tr>
+						<td width="120" valign="top" style="line-height:36px">端口：</td>
+						<td><input name="port" type="text" class="form-input" id="port" style="width:360px;" placeholder="端口">
+						</td>
+					</tr>
+                    <tr>
+						<td width="120" valign="top" style="line-height:36px">主机组：</td>
+						<td><select name="host_group" class="form-input">
+                            <option value="">主机组</option>
+                            {% for hg in hostgroup %}
+                            <option value="{{ hg.id }}">{{ hg.name }}</option>
+                            {% endfor %}
+                        </select></td>
+					</tr>
+                    <tr>
+						<td width="120" valign="top" style="line-height:36px">业务组：</td>
+						<td><select name="business" class="form-input">
+                            <option value="">业务组</option>
+                            {% for bs in business %}
+                            <option value="{{ bs.id }}">{{ bs.name }}</option>
+                            {% endfor %}
+                        </select></td>
+					</tr>
+                    <tr>
+						<td width="120" valign="top" style="line-height:36px">状态：</td>
+						<td><select name="status" class="form-input">
+                            <option value="">状态</option>
+{#                            <option value="0">downline</option>#}
+{#                            <option value="1">online</option>#}
+                            {% for choice in status_obj %}
+                            <option value="{{ forloop.counter0 }}" >{{ choice.1 }}</option>
+                            {% endfor %}
+                        </select>
+						</td>
+					</tr>
+					<tr>
+						<td width="100">&nbsp;</td>
+						<td><input type="submit" class="btn btn-blue btn-float r15" value="确认添加"></td>
+					</tr>
+				</tbody></table>
+
+		</form></div>
+	</div>
+</div>
+{% endblock %}
